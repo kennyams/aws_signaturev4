@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AWS Experiments</title>
-
-<script src="https://sdk.amazonaws.com/js/aws-sdk-2.632.0.min.js"></script>
-</head>
-<body>
-	<header>
-		<div id="right">
-				<h1>AWS Signature v4</h1>
-		</div>
-	</header>
 <?php
-	define("IOT_ENDPOINT","https://a3v1d70hhtwfc0-ats.iot.eu-west-2.amazonaws.com");
-	define("IOT_PORT","443");
 	function cmp($a, $b) {
 		return strcasecmp($a, $b);
 	}
@@ -23,9 +6,13 @@
 		return hash_hmac('sha256',$msg,hex2bin($key));
 	}
 	function Send($path,$payload){
-		//echo "Send\n";
-		//echo IOT_ENDPOINT;
+		if(! defined('IOT_ENDPOINT')
+			|| ! defined('IOT_PORT')
+			|| ! defined('IOT_CRED_FILE')){
+			print_r("IOT endpoint not defined");
+		}
 		$server=IOT_ENDPOINT.":".IOT_PORT;
+		$cred=IOT_CRED_FILE;
 		$requrl=$server.$path."?qos=1";
 		$region="eu-west-2";
 		$method="";
@@ -139,5 +126,3 @@
 		return $out;
 	}
 ?>
-</body>
-</html>
