@@ -6,6 +6,7 @@
 		return hash_hmac('sha256',$msg,hex2bin($key));
 	}
 	function Send($path,$payload){
+		$root=$_SERVER['DOCUMENT_ROOT'];
 		if(! defined('IOT_ENDPOINT')
 			|| ! defined('IOT_PORT')
 			|| ! defined('IOT_CRED_FILE')){
@@ -19,7 +20,7 @@
 
 		$ksecret="";
 		$keyid='';
-		$lines = file('../../ssl/creds/kennyams.cred');
+		$lines = file("$root/../ssl/creds/kennyams.cred");
 		foreach ($lines as $no => $line){
 			$crd=explode(' = ',$line);
 			if($crd[0]=='aws_access_key_id'){
