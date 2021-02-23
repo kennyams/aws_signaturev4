@@ -23,10 +23,12 @@
 		$lines = file("$root/../ssl/creds/kennyams.cred");
 		foreach ($lines as $no => $line){
 			$crd=explode(' = ',$line);
-			if($crd[0]=='aws_access_key_id'){
-				$keyid=trim($crd[1]);
-			}else{
-				$ksecret=trim($crd[1]);
+			if(array_key_exists(1,$crd)){
+				if($crd[0]=='aws_access_key_id'){
+					$keyid=trim($crd[1]);
+				}else{
+					$ksecret=trim($crd[1]);
+				}
 			}
 		}
 
